@@ -1,5 +1,6 @@
 package http.rest.student.control;
 
+import http.rest.RandomIdGenerator;
 import http.rest.student.entity.Student;
 
 import java.util.*;
@@ -30,7 +31,7 @@ public class StudentManager {
     }
 
     public static Integer add(Student student) {
-        int studentId = new Random(System.currentTimeMillis()).nextInt();
+        int studentId = RandomIdGenerator.generateRandomId();
         student.setId(studentId);
         STUDENTS.put(studentId, student);
         return studentId;
