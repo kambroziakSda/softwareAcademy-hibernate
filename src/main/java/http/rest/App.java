@@ -13,9 +13,9 @@ public class App
     {
         UndertowJaxrsServer ut = new UndertowJaxrsServer();
 
-        ExampleApp exampleApp = new ExampleApp();
+        AppEntry appEntry = new AppEntry();
 
-        ut.deploy(exampleApp);
+        ut.deploy(appEntry);
 
         ut.start(
                 Undertow.builder()

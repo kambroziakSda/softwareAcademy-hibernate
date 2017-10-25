@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class RandomIdGenerator {
 
-    public static Integer generateRandoimId(){
+    public static Integer generateRandomId(){
         return  Math.abs(new Random(System.currentTimeMillis())
                 .nextInt());
     }

@@ -1,5 +1,6 @@
 package http.rest;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -8,6 +9,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.*;
@@ -27,8 +29,9 @@ public class AppTest {
         HttpGet get = new HttpGet("http://localhost:8080/students");
 
         HttpResponse execute = httpClient.execute(get);
-        BasicResponseHandler basicResponseHandler = new BasicResponseHandler();
-        String response = basicResponseHandler.handleResponse(execute);
+
+        String response = EntityUtils.toString(execute.getEntity());
+
 
         System.out.println(response);
 

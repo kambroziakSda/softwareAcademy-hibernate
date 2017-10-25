@@ -2,8 +2,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>pl.ambroziak</groupId>
-  <artifactId>standaloneRestAppExample</artifactId>
+  <groupId>http.rest</groupId>
+  <artifactId>softwareAcademy</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
@@ -36,7 +36,8 @@
       <artifactId>resteasy-jackson2-provider</artifactId>
       <version>3.0.10.Final</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+
+
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>

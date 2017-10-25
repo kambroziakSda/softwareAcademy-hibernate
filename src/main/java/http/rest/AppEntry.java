@@ -13,7 +13,7 @@ import java.util.Set;
  * Created by krzysztof on 14.10.17.
  */
 @ApplicationPath("/")
-public class ExampleApp extends Application {
+public class AppEntry extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
