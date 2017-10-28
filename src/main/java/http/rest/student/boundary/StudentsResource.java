@@ -60,7 +60,8 @@ public class StudentsResource {
         Integer studentId = StudentManager.add(student);
 
         return Response.status(Response.Status.CREATED)
-                .location(new URI("/students/"+studentId))
+                .header("objectId", studentId)
+                .location(new URI("/students/" + studentId))
                 .build();
     }
 

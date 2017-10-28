@@ -1,10 +1,14 @@
 package http.rest;
 
-import org.apache.http.HttpEntity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -24,18 +28,10 @@ public class AppTest {
 
     @Test
     public void testShowStudentsWithApacheHttpGET() throws IOException {
-        HttpClient httpClient = HttpClientBuilder.create().build();
-
-        HttpGet get = new HttpGet("http://localhost:8080/students");
-
-        HttpResponse execute = httpClient.execute(get);
-
-        String response = EntityUtils.toString(execute.getEntity());
-
-
-        System.out.println(response);
 
     }
+
+
 
     @Test
     public void testShowStudentsWithHTTPConnection() throws IOException {
@@ -64,11 +60,11 @@ public class AppTest {
 
 
         URL url = new URL("http://localhost:8080/students");
-        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setDoOutput(true);
 
         urlConnection.setRequestProperty("Content-Type", "application/json");
-        urlConnection.setRequestProperty("Content-Length",  String.valueOf(postData.length()));
+        urlConnection.setRequestProperty("Content-Length", String.valueOf(postData.length()));
         urlConnection.setRequestMethod("POST");
 
         OutputStream outputStream = urlConnection.getOutputStream();
@@ -77,7 +73,7 @@ public class AppTest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
         StringBuilder stringBuilder = new StringBuilder();
         String line;
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             stringBuilder.append(line);
         }
 
@@ -97,7 +93,7 @@ public class AppTest {
 
         HttpPost post = new HttpPost("http://localhost:8080/students");
         post.setEntity(new StringEntity("{\"firstName\":\"Krzy\", \"lastName\":\"Amb\"}"));
-        post.setHeader(new BasicHeader("content-type","application/json"));
+        post.setHeader(new BasicHeader("content-type", "application/json"));
 
         HttpResponse execute = httpClient.execute(post);
 
@@ -107,7 +103,4 @@ public class AppTest {
         System.out.println(response);
 
     }
-
-
-
 }
