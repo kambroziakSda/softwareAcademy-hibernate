@@ -14,6 +14,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -24,6 +25,7 @@ import java.net.URLConnection;
 /**
  * Unit test for simple App.
  */
+@Ignore
 public class AppTest {
 
     @Test
