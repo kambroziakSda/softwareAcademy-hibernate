@@ -16,7 +16,7 @@ public class Academy extends VersionedEntity {
         this.name = name;
     }
 
-    private Academy() {
+    public Academy() {
     }
 
     @ManyToMany(fetch = FetchType.EAGER)

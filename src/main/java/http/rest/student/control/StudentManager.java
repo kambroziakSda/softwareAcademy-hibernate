@@ -54,7 +54,6 @@ public class StudentManager {
             return session.createQuery("SELECT e from Student e", Student.class)
                     .getResultList()
                     .stream()
-                    //.map(toStudentDTO())
                     .collect(Collectors.toList());
         }
     }

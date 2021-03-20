@@ -4,14 +4,8 @@ public class GradeDTO {
 
     private String value;
 
-    private int teacherId;
-
-    private String academyName;
-
-    public GradeDTO(String value, int teacherId, String academyName) {
+    public GradeDTO(String value) {
         this.value = value;
-        this.teacherId = teacherId;
-        this.academyName = academyName;
     }
 
     private GradeDTO() {
@@ -21,11 +15,4 @@ public class GradeDTO {
         return value;
     }
 
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public String getAcademyName() {
-        return academyName;
-    }
 }

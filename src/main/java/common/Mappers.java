@@ -16,7 +16,7 @@ public class Mappers {
     }
 
     public static Function<Grade, GradeDTO> toGradeDto() {
-        return g -> new GradeDTO(g.gradeAsString(), g.getTeacher().getId(), g.getAcademy().getName());
+        return g -> new GradeDTO(g.gradeAsString());
     }
 
 
