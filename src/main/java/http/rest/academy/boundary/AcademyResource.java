@@ -6,6 +6,7 @@ import http.rest.academy.control.AcademyCrudException;
 import http.rest.academy.control.AcademyManager;
 import http.rest.academy.entity.Academy;
 import http.rest.academy.entity.AcademyResponseDTO;
+import http.rest.academy.entity.AddTeacherToAcademyRequest;
 import http.rest.academy.entity.SaveAcademyRequest;
 
 import javax.ws.rs.*;
@@ -75,6 +76,36 @@ public class AcademyResource {
     public Response addStudentToAcademy(@PathParam("name") String name, @PathParam("studentId") Integer studentId) {
         try {
             AcademyManager.addStudentToAcademy(name, studentId);
+        } catch (AcademyCrudException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorResponse(e.getMessage())).build();
+        }
+
+        return Response.ok().build();
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{name}/teachers/{teacherId}")
+    public Response addTeacherToAcademy(@PathParam("name") String name, @PathParam("teacherId") Integer teacherId, AddTeacherToAcademyRequest addRequest) {
+        try {
+            AcademyManager.addTeacherToAcademy(name, teacherId, addRequest.getSalary());
+        } catch (AcademyCrudException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new ErrorResponse(e.getMessage())).build();
+        }
+
+        return Response.ok().build();
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{name}/teachers/{teacherId}")
+    public Response removeTeacherFromAcademy(@PathParam("name") String name, @PathParam("teacherId") Integer teacherId) {
+        try {
+            AcademyManager.removeTeacherFromAcademy(name,teacherId);
         } catch (AcademyCrudException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new ErrorResponse(e.getMessage())).build();

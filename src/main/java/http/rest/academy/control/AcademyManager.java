@@ -2,12 +2,17 @@ package http.rest.academy.control;
 
 import hibernate.core.HibernateHelper;
 import http.rest.academy.entity.Academy;
+import http.rest.academy.entity.TeacherInAcademy;
 import http.rest.student.entity.Student;
+import http.rest.teacher.entity.Teacher;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AcademyManager {
 
@@ -70,9 +75,49 @@ public class AcademyManager {
             }
 
             Transaction transaction = session.beginTransaction();
-            academyByNameOpt.get().getStudents().removeIf(s->s.getId().equals(studentId));
+            academyByNameOpt.get().getStudents().removeIf(s -> s.getId().equals(studentId));
             transaction.commit();
             System.out.println("removeFromAcademy end");
         }
+    }
+
+    public static void addTeacherToAcademy(String academyName, Integer teacherId, BigDecimal salary) throws AcademyCrudException {
+        System.out.println("addTeacherToAcademy start");
+        try (Session session = HibernateHelper.INSTANCE.getSession()) {
+            Transaction transaction = session.beginTransaction();
+            Optional<Academy> academyByNameOpt = Optional.ofNullable(session.find(Academy.class, academyName));
+            if (!academyByNameOpt.isPresent()) {
+                throw new AcademyCrudException("Academy not found by name: " + academyName);
+            }
+            Optional<Teacher> teacherOpt = Optional.ofNullable(session.find(Teacher.class, teacherId));
+            if (!teacherOpt.isPresent()) {
+                throw new AcademyCrudException("Teacher not found by id: " + teacherId);
+            }
+            Academy academy = academyByNameOpt.get();
+            academy.getTeachers().add(new TeacherInAcademy(teacherOpt.get(), academy, salary));
+            session.persist(academy);
+            transaction.commit();
+        }
+        System.out.println("addTeacherToAcademy end");
+    }
+
+    public static void removeTeacherFromAcademy(String academyName, Integer teacherId) throws AcademyCrudException {
+        System.out.println("removeTeacherFromAcademy start");
+        try (Session session = HibernateHelper.INSTANCE.getSession()) {
+            Transaction transaction = session.beginTransaction();
+            Optional<Academy> academyByNameOpt = Optional.ofNullable(session.find(Academy.class, academyName));
+            if (!academyByNameOpt.isPresent()) {
+                throw new AcademyCrudException("Academy not found by name: " + academyName);
+            }
+            Optional<Teacher> teacherOpt = Optional.ofNullable(session.find(Teacher.class, teacherId));
+            if (!teacherOpt.isPresent()) {
+                throw new AcademyCrudException("Teacher not found by id: " + teacherId);
+            }
+            Set<String> academies = academyByNameOpt.get().getTeachers().stream().map(t -> t.getAcademy().getName()).collect(Collectors.toSet());
+            System.out.println("Academies: " + academies);
+            academyByNameOpt.get().getTeachers().removeIf(t -> t.getTeacher().equals(teacherOpt.get()));
+            transaction.commit();
+        }
+        System.out.println("removeTeacherFromAcademy end");
     }
 }

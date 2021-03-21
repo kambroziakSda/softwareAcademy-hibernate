@@ -1,8 +1,10 @@
 package http.rest.teacher.entity;
 
 import hibernate.core.VersionedEntity;
+import http.rest.academy.entity.TeacherInAcademy;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Teacher extends VersionedEntity {
@@ -14,6 +16,9 @@ public class Teacher extends VersionedEntity {
     private String firstName;
 
     private String lastName;
+
+    @OneToMany(mappedBy = "teacher")
+    private Set<TeacherInAcademy> academies;
 
     public Teacher(String firstName, String lastName) {
         this.firstName = firstName;
@@ -33,5 +38,9 @@ public class Teacher extends VersionedEntity {
 
     public Integer getId() {
         return id;
+    }
+
+    public Set<TeacherInAcademy> getAcademies() {
+        return academies;
     }
 }

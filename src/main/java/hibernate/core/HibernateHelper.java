@@ -1,6 +1,7 @@
 package hibernate.core;
 
 import http.rest.academy.entity.Academy;
+import http.rest.academy.entity.TeacherInAcademy;
 import http.rest.grade.entity.Grade;
 import http.rest.grade.entity.NumberGrade;
 import http.rest.grade.entity.TextGrade;
@@ -24,6 +25,7 @@ public enum HibernateHelper {
                 .addAnnotatedClass(Grade.class)
                 .addAnnotatedClass(NumberGrade.class)
                 .addAnnotatedClass(TextGrade.class)
+                .addAnnotatedClass(TeacherInAcademy.class)
                 .buildSessionFactory();
     }
 
