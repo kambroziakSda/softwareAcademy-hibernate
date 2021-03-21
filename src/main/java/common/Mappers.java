@@ -12,7 +12,7 @@ public class Mappers {
 
     public static Function<Student, StudentDTO> toStudentDTO() {
         return s -> new StudentDTO(s.getId(), s.getFirstName(), s.getLastName(),
-                s.getGrades().stream().map(toGradeDto()).collect(Collectors.toList()));
+                s.getGrades().stream().map(toGradeDto()).collect(Collectors.toList()),s.getAddress());
     }
 
     public static Function<Grade, GradeDTO> toGradeDto() {

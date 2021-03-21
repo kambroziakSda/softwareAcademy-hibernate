@@ -1,5 +1,6 @@
 package http.rest.student.entity;
 
+import hibernate.core.Address;
 import hibernate.core.VersionedEntity;
 import http.rest.grade.entity.Grade;
 
@@ -29,12 +30,27 @@ public class Student extends VersionedEntity {
     @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
     private List<Grade> grades;
 
+    @Embedded
+    private Address address;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idinvoicedata")
+    private InvoiceData invoiceData;
+
     public Student() {
     }
 
-    public Student(String firstName, String lastName) {
+    public Student(String firstName, String lastName, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
+    }
+
+    public Student(String firstName, String lastName, Address address, InvoiceData invoiceData) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.invoiceData = invoiceData;
     }
 
     public String getFirstName() {
@@ -68,5 +84,9 @@ public class Student extends VersionedEntity {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }

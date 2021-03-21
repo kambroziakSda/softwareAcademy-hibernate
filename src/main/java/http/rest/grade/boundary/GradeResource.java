@@ -18,19 +18,24 @@ import java.util.stream.Collectors;
 @Path("/grades")
 public class GradeResource {
 
+    /*
+    Pobranie wszystkich ocen (tekstowych oraz numeryzcznych) z mechanizmem stronicowania i dziedziczeniem
+     */
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @GET
-    public Response getAll() {
-        List<Grade> gradeList = GradeManager.findAll();
 
+    public Response getAllWithPagination(@QueryParam("page") @DefaultValue("1")  Integer page, @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
+        List<Grade> gradeList = GradeManager.findAllWithPagination(page, pageSize);
         List<GradeDTO> gradeDTOS = gradeList.stream().map(Mappers.toGradeDto()).collect(Collectors.toList());
-
         return Response.ok(gradeDTOS).build();
 
     }
 
+    /*
+    Dodanie oceny numerycznej z wykorzystaniem dziedziczenia
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -48,14 +53,17 @@ public class GradeResource {
         return Response.ok().build();
     }
 
+    /*
+    Dodanie oceny tekstowej z wykorzystaniem dziedziczenia
+  */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/students/{studentId}/academies/{academyName}/teachers/{teacherId}/text")
-    public Response saveTextGrade(@PathParam("studentId") Integer studentId,
-                                  @PathParam("academyName") String academyName,
-                                  @PathParam("teacherId") Integer teacherId,
-                                  SaveTextGradeRequest saveTextGradeRequest) {
+    public Response avarageGrade(@PathParam("studentId") Integer studentId,
+                                 @PathParam("academyName") String academyName,
+                                 @PathParam("teacherId") Integer teacherId,
+                                 SaveTextGradeRequest saveTextGradeRequest) {
 
         try {
             GradeManager.saveGrade(studentId, teacherId, academyName, saveTextGradeRequest.getTextGrade());
@@ -65,12 +73,15 @@ public class GradeResource {
         return Response.ok().build();
     }
 
+    /*
+    Pobranie średniej ocen studenta w akademii z wykorzystaniem hql
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/students/{studentId}/average/academies/{academyName}")
-    public Response saveTextGrade(@PathParam("studentId") Integer studentId,
-                                  @PathParam("academyName") String academyName) {
+    public Response avarageGrade(@PathParam("studentId") Integer studentId,
+                                 @PathParam("academyName") String academyName) {
 
         try {
             Double average = GradeManager.getAverage(studentId, academyName);

@@ -40,7 +40,7 @@ public class StudentManager {
     }
 
     public static Integer saveStudent(StudentDTO studentDTO) {
-        Student student = new Student(studentDTO.getFirstName(), studentDTO.getLastName());
+        Student student = new Student(studentDTO.getFirstName(), studentDTO.getLastName(), studentDTO.getAddress());
         try (Session session = HibernateHelper.INSTANCE.getSession()) {
             Transaction transaction = session.beginTransaction();
             session.persist(student);

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(uniqueConstraints= @UniqueConstraint(columnNames = {"firstName", "lastName"}) )
 public class Teacher extends VersionedEntity {
 
     @Id

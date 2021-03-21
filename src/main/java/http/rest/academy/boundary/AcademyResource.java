@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 @Path("/academies")
 public class AcademyResource {
 
+    /*
+    Zapis encji Academy do bazy
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -29,6 +32,9 @@ public class AcademyResource {
         return Response.ok().build();
     }
 
+    /*
+    Wyciagniecie wszystkich akademy
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -41,6 +47,9 @@ public class AcademyResource {
         return Response.ok(academyResponseDTOS).build();
     }
 
+    /*
+        Wyciagniecie wszystkich akademy z uzyciem join fetch na students
+    */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -53,6 +62,9 @@ public class AcademyResource {
         return Response.ok(academyResponseDTOS).build();
     }
 
+    /*
+        Wyciagniecie akademi po nazwie
+ */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -69,6 +81,9 @@ public class AcademyResource {
 
     }
 
+    /*
+    Dodanie studenta do akademii
+     */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -84,6 +99,9 @@ public class AcademyResource {
         return Response.ok().build();
     }
 
+    /*
+       Dodanie nauczyciela do akademii z okreslenie jego pensji w akademii
+ */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -99,13 +117,16 @@ public class AcademyResource {
         return Response.ok().build();
     }
 
+    /*
+        Usuniecie nauczyciela z akadamii
+ */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{name}/teachers/{teacherId}")
     public Response removeTeacherFromAcademy(@PathParam("name") String name, @PathParam("teacherId") Integer teacherId) {
         try {
-            AcademyManager.removeTeacherFromAcademy(name,teacherId);
+            AcademyManager.removeTeacherFromAcademy(name, teacherId);
         } catch (AcademyCrudException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(new ErrorResponse(e.getMessage())).build();
@@ -114,6 +135,9 @@ public class AcademyResource {
         return Response.ok().build();
     }
 
+    /*
+    Usuniecie studenta z akademii
+*/
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

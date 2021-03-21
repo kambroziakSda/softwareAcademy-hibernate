@@ -13,6 +13,9 @@ import javax.ws.rs.core.Response;
 @Path("/teachers")
 public class TeacherResource {
 
+    /*
+    Dodanie nauczyciela do bazy
+     */
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

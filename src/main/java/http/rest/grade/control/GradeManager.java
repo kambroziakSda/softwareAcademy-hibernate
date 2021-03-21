@@ -60,9 +60,11 @@ public class GradeManager {
         }
     }
 
-    public static List<Grade> findAll() {
+    public static List<Grade> findAllWithPagination(Integer page, Integer pageSize) {
         try (Session session = HibernateHelper.INSTANCE.getSession()) {
             List<Grade> grades = session.createQuery("SELECT e from Grade e", Grade.class)
+                    .setMaxResults(pageSize)
+                    .setFirstResult((page - 1) * pageSize)
                     .getResultList();
 
             return grades;
@@ -84,7 +86,7 @@ public class GradeManager {
                     .setParameter("student", studentOpt.get())
                     .setParameter("academy", academyOpt.get())
                     .getSingleResult()).orElse(0d);
-            
+
         }
     }
 }

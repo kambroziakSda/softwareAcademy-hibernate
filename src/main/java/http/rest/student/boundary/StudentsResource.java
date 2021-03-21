@@ -20,6 +20,26 @@ import java.util.stream.Collectors;
 @Path("/students")
 public class StudentsResource {
 
+    /*
+        Pobranie studenta po identyfikatorze
+ */
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public Response getStudentById(@PathParam("id") Integer id) {
+        Optional<StudentDTO> optionalStudent = StudentManager.getStudentById(id)
+                .map(Mappers.toStudentDTO());
+        return optionalStudent
+                .map(this::buildCorrectResponse)
+                .orElse(Response.status(Response.Status.NOT_FOUND)
+                        .entity("Student not found by id: " + id)
+                        .build());
+    }
+
+
+    /*
+        Pobranie studentow z opcjonalnym filtrowaniem po imieniu i nazwisku
+     */
     @Path("/")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,19 +65,9 @@ public class StudentsResource {
     }
 
 
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @GET
-    public Response getStudentById(@PathParam("id") Integer id) {
-        Optional<StudentDTO> optionalStudent = StudentManager.getStudentById(id)
-                .map(Mappers.toStudentDTO());
-        return optionalStudent
-                .map(this::buildCorrectResponse)
-                .orElse(Response.status(Response.Status.NOT_FOUND)
-                        .entity("Student not found by id: " + id)
-                        .build());
-    }
-
+    /*
+    Dodanie studenta
+     */
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @POST
@@ -73,6 +83,9 @@ public class StudentsResource {
                 .build();
     }
 
+    /*
+    Edycja studenta
+     */
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @PUT
@@ -96,8 +109,9 @@ public class StudentsResource {
                 .build();
     }
 
-
-
+/*
+Usuniecie studenta z bazy
+ */
     @DELETE
     @Path("/{id}")
     public Response remove(@PathParam("id") Integer id) {
