@@ -40,11 +40,13 @@ public class AcademyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/")
     public Response getAllAcademies() {
-        List<AcademyResponseDTO> academyResponseDTOS = AcademyManager.findAll()
+       /* List<AcademyResponseDTO> academyResponseDTOS = AcademyManager.findAll()
                 .stream()
                 .map(toAcademyDTO())
-                .collect(Collectors.toList());
-        return Response.ok(academyResponseDTOS).build();
+                .collect(Collectors.toList());*/
+        return Response
+                .ok(/*academyResponseDTOS*/)
+                .build();
     }
 
     /*
@@ -55,11 +57,11 @@ public class AcademyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/v2")
     public Response getAllAcademiesJoinFetchStudents() {
-        List<AcademyResponseDTO> academyResponseDTOS = AcademyManager.findAllWithStudents()
+      /*  List<AcademyResponseDTO> academyResponseDTOS = AcademyManager.findAllWithStudents()
                 .stream()
                 .map(toAcademyDTO())
-                .collect(Collectors.toList());
-        return Response.ok(academyResponseDTOS).build();
+                .collect(Collectors.toList());*/
+        return Response.ok(/*academyResponseDTOS*/).build();
     }
 
     /*
@@ -70,19 +72,19 @@ public class AcademyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{name}")
     public Response getAcademy(@PathParam("name") String name) {
-        Optional<AcademyResponseDTO> academyByName = AcademyManager.findAcademyByName(name)
+      /*  Optional<AcademyResponseDTO> academyByName = AcademyManager.findAcademyByName(name)
                 .map(toAcademyDTO());
 
         if (academyByName.isPresent()) {
             return Response.ok(academyByName.get()).build();
 
-        }
+        }*/
         return Response.status(Response.Status.NOT_FOUND).build();
 
     }
 
     /*
-    Dodanie studenta do akademii
+    Dodanie studenta do akademii, zapis w relacji wiele do wiele bez orphanRemoval
      */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -100,7 +102,8 @@ public class AcademyResource {
     }
 
     /*
-       Dodanie nauczyciela do akademii z okreslenie jego pensji w akademii
+       Dodanie nauczyciela do akademii z okreslenie jego pensji w akademii, relacja wiele do wiele z dodatkowym polem,
+       cascade persist
  */
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,7 +121,7 @@ public class AcademyResource {
     }
 
     /*
-        Usuniecie nauczyciela z akadamii
+        Usuniecie nauczyciela z akadamii, orphanRemoval
  */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -136,7 +139,7 @@ public class AcademyResource {
     }
 
     /*
-    Usuniecie studenta z akademii
+    Usuniecie studenta z akademii, bez orphanRemoval
 */
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
@@ -150,12 +153,6 @@ public class AcademyResource {
                     .entity(new ErrorResponse(e.getMessage())).build();
         }
         return Response.ok().build();
-    }
-
-
-    private Function<Academy, AcademyResponseDTO> toAcademyDTO() {
-        return a -> new AcademyResponseDTO(a.getName(), a.getStudents().stream()
-                .map(Mappers.toStudentDTO()).collect(Collectors.toList()));
     }
 
 
