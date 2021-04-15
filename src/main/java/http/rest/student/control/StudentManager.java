@@ -22,17 +22,27 @@ public class StudentManager {
 
     public static Optional<Student> getStudentById(Integer id) {
         try (Session session = HibernateHelper.INSTANCE.getSession();) {
-            return null;
+            return Optional.ofNullable(session.find(Student.class, id));
         }
 
     }
 
     public static Integer saveStudent(StudentDTO studentDTO) {
-        return null;
+        try (Session session = HibernateHelper.INSTANCE.getSession()) {
+            Transaction transaction = session.beginTransaction();
+            Student student = new Student(studentDTO.getFirstName());
+            session.persist(student);
+            transaction.commit();
+            return student.getId();
+        }
     }
 
     public static List<Student> getAllStudents() {
-        return Collections.emptyList();
+        try(Session session = HibernateHelper.INSTANCE.getSession()) {
+            return session.createQuery("SELECT s from Student s", Student.class)
+                    .getResultList();
+
+        }
     }
 
     public static Optional<Student> updateStudent(Integer id, StudentDTO studentDTO) {
@@ -40,15 +50,15 @@ public class StudentManager {
     }
 
     public static boolean remove(Integer id) {
-       try (Session session = HibernateHelper.INSTANCE.getSession()) {
-           Student student = session.find(Student.class, id);
-           if(student == null){
-               return false;
-           }
-           Transaction transaction = session.beginTransaction();
-           session.remove(student);
-           transaction.commit();
-           return true;
-       }
+        try (Session session = HibernateHelper.INSTANCE.getSession()) {
+            Student student = session.find(Student.class, id);
+            if (student == null) {
+                return false;
+            }
+            Transaction transaction = session.beginTransaction();
+            session.remove(student);
+            transaction.commit();
+            return true;
+        }
     }
 }

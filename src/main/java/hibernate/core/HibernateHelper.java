@@ -21,13 +21,13 @@ public enum HibernateHelper {
         sessionFactory = new Configuration()
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Student.class)
-                .addAnnotatedClass(Teacher.class)
+               /* .addAnnotatedClass(Teacher.class)
                 .addAnnotatedClass(Academy.class)
                 .addAnnotatedClass(Grade.class)
                 .addAnnotatedClass(NumberGrade.class)
                 .addAnnotatedClass(TextGrade.class)
                 .addAnnotatedClass(TeacherInAcademy.class)
-                .addAnnotatedClass(InvoiceData.class)
+                .addAnnotatedClass(InvoiceData.class)*/
                 .buildSessionFactory();
     }
 

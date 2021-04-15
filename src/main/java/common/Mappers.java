@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class Mappers {
 
     public static Function<Student, StudentDTO> toStudentDTO() {
-        return null;
+        return student -> new StudentDTO(student.getId(), student.getFirstName(), null, null, null);
     }
 
     public static Function<Grade, GradeDTO> toGradeDto() {

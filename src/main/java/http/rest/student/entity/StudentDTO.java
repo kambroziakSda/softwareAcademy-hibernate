@@ -32,8 +32,8 @@ public class StudentDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.grades = grades;
-        this.city = address.getCity();
-        this.street = address.getStreet();
+        this.city = address != null ? address.getCity() : null;
+        this.street = address != null ? address.getStreet() : null;
     }
 
     public String getFirstName() {
