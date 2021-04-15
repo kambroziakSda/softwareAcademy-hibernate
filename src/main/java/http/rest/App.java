@@ -28,7 +28,7 @@ public class App
 
         ut.start(
                 Undertow.builder()
-                        .addHttpListener(8080, "localhost")
+                        .addHttpListener(80, "localhost")
 
         );
         System.out.println("Application is running");

@@ -6,6 +6,7 @@ import http.rest.student.entity.StudentDTO;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class StudentManager {
     }
 
     public static List<Student> getAllStudents() {
-        return null;
+        return Collections.emptyList();
     }
 
     public static Optional<Student> updateStudent(Integer id, StudentDTO studentDTO) {
